@@ -58,14 +58,6 @@ def get_file(folder_name, filename):
     else:
         return Response("File not found", status=404)
 
-    
-    # return send_file(
-    #         io.BytesIO(response.content),
-    #         mimetype='image/jpeg',  # Set the MIME type explicitly to JPEG
-    #         as_attachment=False,
-    #         attachment_filename=f"{filename}.jpeg"  # Add the JPEG extension to the filename
-    #     )
-    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
