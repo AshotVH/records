@@ -38,7 +38,7 @@ def index():
     if is_logged_in():
         # response = requests.get(f"{API_ADDRESS}/folders")
         # data = response.json()
-        return render_template('index.html',data=data)
+        return render_template('index.html')
     else:
         return redirect(url_for('login'))
 
