@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       console.log(typeof data);
       console.log(data);
+      console.log(Object.keys(data).length);
       let treeObject = {};
       for (const [key, value] of Object.entries(data)) {
         if (value.length == 7) {
@@ -43,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       console.log(treeObject);
+      console.log(Object.keys(treeObject).length);
+
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
