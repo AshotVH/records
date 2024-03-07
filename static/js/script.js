@@ -36,9 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       console.log(typeof data);
       console.log(data);
-      const treeObject = {};
+      let treeObject = {};
       for (const [key, value] of Object.entries(data)) {
-        console.log(`${key}: ${value}`);
+        treeObject[toLocalTimeStr(key)] = value;
+        console.log(treeObject);
       }
       
     })
