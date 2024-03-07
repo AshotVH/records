@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   )
     .then((response) => response.text())
     .then((data) => {
-      console.log(data);
       const img = document.createElement("img");
       img.src = "data:image/jpeg;base64," + data;
       document.body.appendChild(img);
@@ -50,4 +49,55 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
+    
+    var treeData = [
+      {
+        text: "Node 1",
+        expanded: true,
+        icon: "fa fa-folder", // requires font awesome
+        nodes: [
+          {
+            text: "Sub Node 1",
+            icon: "fa fa-folder",
+            nodes: [
+              {
+                id:    "sub-node-1",
+                text:  "Sub Child Node 1",
+                icon:  "fa fa-folder",
+                class: "nav-level-3",
+                href:  "https://jqueryscript.net"
+              },
+              {
+                text: "Sub Child Node 2",
+                icon: "fa fa-folder"
+              }
+            ]
+          },
+          {
+            text: "Sub Node 2",
+             icon: "fa fa-folder"
+          }
+        ]
+      },
+      {
+        text: "Node 2",
+        icon: "fa fa-folder"
+      },
+      {
+        text: "Node 3",
+        icon: "fa fa-folder"
+      },
+      {
+        text: "Node 4",
+        icon: "fa fa-folder"
+      },
+      {
+        text: "Node 5",
+        icon: "fa fa-folder"
+      }
+  ];
+
+  $('#tree').bstreeview({ 
+    data: treeData
+  });
 });
