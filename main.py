@@ -52,7 +52,7 @@ def get_folders():
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
     logger.info("blabla")
-    return response.status_code
+    return {"response": response.status_code}
     # return send_file(
     #         io.BytesIO(response.content),
     #         mimetype='image/jpeg',  # Set the MIME type explicitly to JPEG
