@@ -36,6 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       console.log(typeof data);
       console.log(data);
+      const treeObject = {};
+      for (const [key, value] of Object.entries(data)) {
+        console.log(`${key}: ${value}`);
+      }
+      
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
