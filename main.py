@@ -4,6 +4,7 @@ import os
 import time
 import io
 import base64
+import logging
 
 app = Flask(__name__)
 
@@ -60,4 +61,4 @@ def get_file(folder_name, filename):
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=443, debug=True)
