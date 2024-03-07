@@ -49,8 +49,12 @@ def get_folders():
 
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
-    response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
-    return response.status_code
+    try:
+        response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
+        return response.status_code
+    except Exception as err:
+        return err
+
     return send_file(
             io.BytesIO(response.content),
             mimetype='image/jpeg',  # Set the MIME type explicitly to JPEG
