@@ -1,7 +1,8 @@
-from flask import Flask, Response, stream_with_context, request, render_template,redirect, url_for, session, flash
+from flask import Flask, Response, send_file, request, render_template,redirect, url_for, session, flash
 import requests
 import os
 import time
+import io
 app = Flask(__name__)
 
 PASSWORD = os.environ.get("PASSWORD")
@@ -47,8 +48,8 @@ def get_folders():
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
-    return f"{API_ADDRESS}/files/{folder_name}/{filename}"
-    return response
+    # Assuming response.content contains the file content
+    return send_file(io.BytesIO(response.content), as_attachment=True, attachment_filename=filename)
 
 
 if __name__ == '__main__':
