@@ -42,8 +42,7 @@ def index():
 @app.route('/get_folders')
 def get_folders():
     response = requests.get(f"{API_ADDRESS}/folders")
-    # return response.json()
-    return "boo"
+    return response.json()
 
 
 if __name__ == '__main__':
