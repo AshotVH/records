@@ -51,7 +51,7 @@ def get_folders():
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
     return send_file(
-            response.raw,
+            io.BytesIO(response.content),
             mimetype='image/jpeg',  # Set the MIME type explicitly to JPEG
             as_attachment=False,
             attachment_filename=f"{filename}.jpeg"  # Add the JPEG extension to the filename
