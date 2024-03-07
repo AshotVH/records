@@ -50,6 +50,21 @@ def get_folders():
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
+    status_code = response.status_code
+    # Get other information from the response headers
+    headers = response.headers
+    content_type = headers.get('content-type')
+    content_length = headers.get('content-length')
+    # Add more headers as needed
+    
+    # Return the status code and other information as a JSON response
+    return {
+        'status_code': status_code,
+        'content_type': content_type,
+        'content_length': content_length
+        # Add more response information as needed
+    }
+
     img_base64 = base64.b64encode(response.content)
     return {'image_base64': img_base64}
 
