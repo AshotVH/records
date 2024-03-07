@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Hello World!");
-  fetch('http://example.com/movies.json')
+  fetch('https://records-slow-control.app.cern.ch/get_folders')
   .then((response) => {
     return response.json();
   })

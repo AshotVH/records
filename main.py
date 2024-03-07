@@ -32,15 +32,19 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-
 @app.route('/')
 def index():
     if is_logged_in():
-        # response = requests.get(f"{API_ADDRESS}/folders")
-        # data = response.json()
+        
         return render_template('index.html')
     else:
         return redirect(url_for('login'))
+
+@app.route('/get_folders')
+def get_folders():
+    response = requests.get(f"{API_ADDRESS}/folders")
+    return response
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
