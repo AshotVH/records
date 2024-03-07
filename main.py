@@ -7,7 +7,7 @@ import base64
 import logging
 
 app = Flask(__name__)
-
+logger = logging.getLogger(__name__)
 PASSWORD = os.environ.get("PASSWORD")
 app.secret_key = os.environ.get("SECRET_KEY", "secret")
 API_ADDRESS = os.environ.get("API_ADDRESS")
@@ -51,6 +51,7 @@ def get_folders():
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
+    logger.info("blabla")
     return response.status_code
     # return send_file(
     #         io.BytesIO(response.content),
