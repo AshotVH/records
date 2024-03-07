@@ -49,7 +49,7 @@ def get_folders():
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
     # Assuming response.content contains the file content
-    return send_file(io.BytesIO(response.content), as_attachment=True, attachment_filename=filename)
+    return send_file(io.BytesIO(response.content), as_attachment=False, attachment_filename=filename)
 
 
 if __name__ == '__main__':
