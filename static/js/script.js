@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
       let treeObject = {};
       for (const [key, value] of Object.entries(data)) {
         treeObject[toLocalTimeStr(key)] = value;
-        console.log(treeObject);
       }
-      
+      console.log(treeObject);
+
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
