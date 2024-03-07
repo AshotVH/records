@@ -35,7 +35,6 @@ def logout():
 @app.route('/')
 def index():
     if is_logged_in():
-        
         return render_template('index.html')
     else:
         return redirect(url_for('login'))
@@ -43,7 +42,7 @@ def index():
 @app.route('/get_folders')
 def get_folders():
     response = requests.get(f"{API_ADDRESS}/folders")
-    return response
+    return response.json()
 
 
 if __name__ == '__main__':
