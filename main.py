@@ -49,7 +49,7 @@ def get_folders():
 
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
-    return folder_name
+    return filename
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
     return response.status_code
     return send_file(
