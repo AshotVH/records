@@ -4,10 +4,9 @@ import os
 import time
 app = Flask(__name__)
 
-
 PASSWORD = os.environ.get("PASSWORD")
 app.secret_key = os.environ.get("SECRET_KEY", "secret")
-
+API_ADDRESS = os.environ.get("API_ADDRESS")
 def is_logged_in():
     return session.get("logged_in")
 
@@ -37,7 +36,9 @@ def logout():
 @app.route('/')
 def index():
     if is_logged_in():
-        return render_template('index.html')
+        response = requests.get(f"{API_ADDRESS}/folders")
+        data = response.json()
+        return render_template('index.html',data=data)
     else:
         return redirect(url_for('login'))
 
