@@ -38,10 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(data);
       let treeObject = {};
       for (const [key, value] of Object.entries(data)) {
-        treeObject[toLocalTimeStr(key)] = value;
+        if (value.length == 7) {
+          treeObject[toLocalTimeStr(key)] = value;
+        }
       }
       console.log(treeObject);
-
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
