@@ -36,68 +36,52 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(typeof data);
       console.log(data);
       console.log(Object.keys(data).length);
-      let treeObject = {};
+      let treeData = [];
+
       for (const [key, value] of Object.entries(data)) {
         if (value.length == 7) {
-          treeObject[toLocalTimeStr(key)] = value;
+          let node = {
+            text: toLocalTimeStr(key),
+            icon: "fa fa-folder",
+            nodes: [
+              {
+                text: "cam-401",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-404",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-405",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-407",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-408",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-409",
+                icon: "fa-regular fa-image",
+              },
+              {
+                text: "cam-410",
+                icon: "fa-regular fa-image",
+              },
+            ],
+          };
+          treeData.push(node);
         }
       }
-      console.log(treeObject);
-      console.log(Object.keys(treeObject).length);
-
+      $("#tree").bstreeview({
+        data: treeData,
+      });
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
-    
-    var treeData = [
-      {
-        text: "Node 1",
-        expanded: true,
-        icon: "fa fa-folder", // requires font awesome
-        nodes: [
-          {
-            text: "Sub Node 1",
-            icon: "fa fa-folder",
-            nodes: [
-              {
-                id:    "sub-node-1",
-                text:  "Sub Child Node 1",
-                icon:  "fa fa-folder",
-                class: "nav-level-3",
-                href:  "https://jqueryscript.net"
-              },
-              {
-                text: "Sub Child Node 2",
-                icon: "fa fa-folder"
-              }
-            ]
-          },
-          {
-            text: "Sub Node 2",
-             icon: "fa fa-folder"
-          }
-        ]
-      },
-      {
-        text: "Node 2",
-        icon: "fa fa-folder"
-      },
-      {
-        text: "Node 3",
-        icon: "fa fa-folder"
-      },
-      {
-        text: "Node 4",
-        icon: "fa fa-folder"
-      },
-      {
-        text: "Node 5",
-        icon: "fa fa-folder"
-      }
-  ];
-
-  $('#tree').bstreeview({ 
-    data: treeData
-  });
 });
