@@ -55,7 +55,7 @@ def get_file(folder_name, filename):
             mimetype='image/jpeg',  # Set the MIME type explicitly to JPEG
             as_attachment=False,
             attachment_filename=f"{filename}.jpeg"  # Add the JPEG extension to the filename
-        )
+        ), response.status_code
     
 
 if __name__ == '__main__':
