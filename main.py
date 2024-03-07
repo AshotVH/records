@@ -3,6 +3,8 @@ import requests
 import os
 import time
 import io
+import base64
+
 app = Flask(__name__)
 
 PASSWORD = os.environ.get("PASSWORD")
@@ -48,8 +50,8 @@ def get_folders():
 @app.route('/files/<folder_name>/<filename>')
 def get_file(folder_name, filename):
     response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
-    # Assuming response.content contains the file content
-    return send_file(io.BytesIO(response.content), as_attachment=False, attachment_filename=filename)
+    img_base64 = base64.b64encode(response.content)
+    return {'image_base64': img_base64}
 
 
 if __name__ == '__main__':
