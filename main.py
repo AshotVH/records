@@ -36,8 +36,8 @@ def logout():
 @app.route('/')
 def index():
     if is_logged_in():
-        response = requests.get(f"{API_ADDRESS}/folders")
-        data = response.json()
+        # response = requests.get(f"{API_ADDRESS}/folders")
+        # data = response.json()
         return render_template('index.html',data=data)
     else:
         return redirect(url_for('login'))
