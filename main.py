@@ -44,6 +44,11 @@ def get_folders():
     response = requests.get(f"{API_ADDRESS}/folders")
     return response.json()
 
+@app.route('/files/<folder_name>/<filename>')
+def get_file(folder_name, filename):
+    response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
+    return response
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
