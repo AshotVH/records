@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
   .catch(error => console.error('Error:', error));
   
-  fetch('https://records-slow-control.app.cern.ch/folders')
+  fetch('https://records-slow-control.app.cern.ch/get_folders')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
