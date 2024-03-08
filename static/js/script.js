@@ -33,16 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((data) => {
-      console.log(typeof data);
-      console.log(data);
-      console.log(Object.keys(data).length);
       let treeData = [];
-
       for (const [key, value] of Object.entries(data)) {
         if (value.length == 7) {
           let node = {
             text: toLocalTimeStr(key),
             icon: "fa fa-folder",
+            id: key,
             nodes: [
               {
                 text: "cam-401",
