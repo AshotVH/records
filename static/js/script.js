@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       $(".list-group-item").on("click", function (event) {
         console.log(event.target.id);
+        event.stopPropagation();
         [timeStamp, filename] = event.target.id.split(' ');
         fetch(
           `https://records-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
