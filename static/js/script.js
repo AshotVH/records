@@ -11,9 +11,10 @@ function toLocalTimeStr(timeStr) {
     .toISOString()
     .slice(0, 19)
     .replace("T", " ");
-  return localTimeString;
+  return [localTimeString, localDate.getTime()];
 }
 document.addEventListener("DOMContentLoaded", () => {
+  let folderTimestamps = [];
   fetch("https://records-np04-slow-control.app.cern.ch/get_folders")
     .then((response) => {
       if (!response.ok) {
@@ -26,8 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
       let treeData = [];
       for (const [key, value] of Object.entries(data)) {
         if (value.length == 7) {
+          folderTimestamps.push(toLocalTimeStr(key)[1]);
           let node = {
-            text: toLocalTimeStr(key),
+            text: toLocalTimeStr(key)[0],
             icon: "fa fa-folder",
             nodes: [
               {
@@ -78,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       console.log(treeData.length);
+      console.log(folderTimestamps);
       $("#tree").bstreeview({
         data: treeData,
       });
