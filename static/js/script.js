@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((data) => {
+      console.log(Object.keys(data).length);
       let treeData = [];
       for (const [key, value] of Object.entries(data)) {
         if (value.length == 7) {
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
           treeData.push(node);
         }
       }
+      console.log(treeData.length);
       $("#tree").bstreeview({
         data: treeData,
       });
