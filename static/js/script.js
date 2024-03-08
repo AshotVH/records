@@ -43,37 +43,37 @@ document.addEventListener("DOMContentLoaded", () => {
               {
                 text: "cam-401",
                 icon: "fa-regular fa-image",
-                id: key + " cam401"
+                id: key + " cam401",
               },
               {
                 text: "cam-404",
                 icon: "fa-regular fa-image",
-                id: key + " cam404"
+                id: key + " cam404",
               },
               {
                 text: "cam-405",
                 icon: "fa-regular fa-image",
-                id: key + " cam405"
+                id: key + " cam405",
               },
               {
                 text: "cam-407",
                 icon: "fa-regular fa-image",
-                id: key + " cam407"
+                id: key + " cam407",
               },
               {
                 text: "cam-408",
                 icon: "fa-regular fa-image",
-                id: key + " cam408"
+                id: key + " cam408",
               },
               {
                 text: "cam-409",
                 icon: "fa-regular fa-image",
-                id: key + " cam409"
+                id: key + " cam409",
               },
               {
                 text: "cam-410",
                 icon: "fa-regular fa-image",
-                id: key + " cam410"
+                id: key + " cam410",
               },
             ],
           };
@@ -82,6 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       $("#tree").bstreeview({
         data: treeData,
+      });
+      $(".list-group-item").on("click", function (event) {
+        console.log(event.target.id)
       });
     })
     .catch((error) => {
