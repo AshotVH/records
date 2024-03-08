@@ -14,7 +14,7 @@ function toLocalTimeStr(timeStr) {
   return localTimeString;
 }
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("https://records-slow-control.app.cern.ch/get_folders")
+  fetch("https://records-np04-slow-control.app.cern.ch/get_folders")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.stopPropagation();
         [timeStamp, filename] = event.target.id.split(' ');
         fetch(
-          `https://records-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
+          `https://records-np04-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
         )
           .then((response) => response.text())
           .then((data) => {
