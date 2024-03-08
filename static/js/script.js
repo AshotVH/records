@@ -44,30 +44,37 @@ document.addEventListener("DOMContentLoaded", () => {
               {
                 text: "cam-401",
                 icon: "fa-regular fa-image",
+                class: "cam401"
               },
               {
                 text: "cam-404",
                 icon: "fa-regular fa-image",
+                class: "cam404"
               },
               {
                 text: "cam-405",
                 icon: "fa-regular fa-image",
+                class: "cam405"
               },
               {
                 text: "cam-407",
                 icon: "fa-regular fa-image",
+                class: "cam407"
               },
               {
                 text: "cam-408",
                 icon: "fa-regular fa-image",
+                class: "cam408"
               },
               {
                 text: "cam-409",
                 icon: "fa-regular fa-image",
+                class: "cam409"
               },
               {
                 text: "cam-410",
                 icon: "fa-regular fa-image",
+                class: "cam410"
               },
             ],
           };
