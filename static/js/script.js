@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     console.log(treeData.length);
-    folderTimestamps.sort(() => a - b);
+    folderTimestamps.sort((a,b) => a - b);
     console.log(folderTimestamps);
     console.log(folderTimestamps.length);
     $("#tree").bstreeview({
