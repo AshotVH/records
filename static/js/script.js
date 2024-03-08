@@ -33,36 +33,43 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: "cam-401",
                 icon: "fa-regular fa-image",
                 id: key + " cam401",
+                class: "cam_item"
               },
               {
                 text: "cam-404",
                 icon: "fa-regular fa-image",
                 id: key + " cam404",
+                class: "cam_item"
               },
               {
                 text: "cam-405",
                 icon: "fa-regular fa-image",
                 id: key + " cam405",
+                class: "cam_item"
               },
               {
                 text: "cam-407",
                 icon: "fa-regular fa-image",
                 id: key + " cam407",
+                class: "cam_item"
               },
               {
                 text: "cam-408",
                 icon: "fa-regular fa-image",
                 id: key + " cam408",
+                class: "cam_item"
               },
               {
                 text: "cam-409",
                 icon: "fa-regular fa-image",
                 id: key + " cam409",
+                class: "cam_item"
               },
               {
                 text: "cam-410",
                 icon: "fa-regular fa-image",
                 id: key + " cam410",
+                class: "cam_item"
               },
             ],
           };
@@ -72,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#tree").bstreeview({
         data: treeData,
       });
-      $(".list-group-item").on("click", function (event) {
+      $(".cam_item").on("click", function (event) {
         console.log(event.target.id);
         event.stopPropagation();
         [timeStamp, filename] = event.target.id.split(' ');
