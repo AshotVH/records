@@ -14,17 +14,6 @@ function toLocalTimeStr(timeStr) {
   return localTimeString;
 }
 document.addEventListener("DOMContentLoaded", () => {
-  fetch(
-    "https://records-slow-control.app.cern.ch/files/2024-03-07_21-07-52/cam405"
-  )
-    .then((response) => response.text())
-    .then((data) => {
-      const img = document.createElement("img");
-      img.src = "data:image/jpeg;base64," + data;
-      document.body.appendChild(img);
-    })
-    .catch((error) => console.error("Error:", error));
-
   fetch("https://records-slow-control.app.cern.ch/get_folders")
     .then((response) => {
       if (!response.ok) {
@@ -84,7 +73,24 @@ document.addEventListener("DOMContentLoaded", () => {
         data: treeData,
       });
       $(".list-group-item").on("click", function (event) {
-        console.log(event.target.id)
+        console.log(event.target.id);
+        [timeStamp, filename] = event.target.id.split(' ');
+        fetch(
+          `https://records-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
+        )
+          .then((response) => response.text())
+          .then((data) => {
+            const element = document.getElementById("screenshot");
+            if(element){
+              element.remove();
+            }
+            const img = document.createElement("img");
+            img.setAttribute('id','screenshot');
+            img.src = "data:image/jpeg;base64," + data;
+            document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+          })
+          .catch((error) => console.error("Error:", error));
+
       });
     })
     .catch((error) => {
