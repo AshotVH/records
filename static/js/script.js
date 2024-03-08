@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       console.log(treeData.length);
       console.log(folderTimestamps);
+      console.log(folderTimestamps.length);
       $("#tree").bstreeview({
         data: treeData,
       });
