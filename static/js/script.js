@@ -210,8 +210,12 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#submit_timerange").on("click", function (event) {
     if (startDateTime && endDateTime) {
       console.log(`${startDateTime} --- ${endDateTime}`);
-      const dd = new Date(startDateTime);
-      console.log(dd);
+      const sd = new Date(startDateTime);
+      console.log(sd);
+      console.log(sd/getTime());
+      const ed = new Date(endtDateTime);
+      console.log(ed);
+      console.log(ed/getTime());
     }
   });
 
