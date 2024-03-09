@@ -169,16 +169,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     folderTimestamps.sort((a, b) => a - b);
-    console.log(folderTimestamps);
-    console.log(folderTimestamps.length);
-    let ddate = new Date(folderTimestamps[folderTimestamps.length - 1]);
-    console.log("folderTimestamp" + ddate);
     treeData = constructTreeData(folderTimestamps.slice(-60));
     $("#tree").bstreeview({
       data: treeData,
     });
     $(".cam_item").on("click", function (event) {
-      console.log(event.target.id);
       event.stopPropagation();
       [timeStamp, filename] = event.target.id.split(" ");
       fetch(

@@ -29,3 +29,7 @@ body {
   height: 80vh;
   overflow-y: scroll;
 }
+.timerange{
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+}
