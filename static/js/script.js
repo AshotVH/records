@@ -159,10 +159,10 @@ function constructTreeData(arrayOfTimestamps) {
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
+  folderTimestamps = [];
+  let treeData = [];
   getFolders().then((data) => {
     console.log(Object.keys(data).length);
-    let treeData = [];
-    folderTimestamps = [];
     for (const [key, value] of Object.entries(data)) {
       if (value.length == 7) {
         folderTimestamps.push(toLocalTimeStr(key));
