@@ -26,6 +26,7 @@ function localToUTCTimeStamp(localUnixDate) {
     .replaceAll(":", "-");
   return str;
 }
+
 //receives sorted array (sortedArr) of integer numbers,
 //and returns new array of elements between min and max
 function filterByRange(sortedArr, minValue, maxValue) {
@@ -42,53 +43,46 @@ function filterByRange(sortedArr, minValue, maxValue) {
       if (sortedArr[middleIndex] == minValue) {
         startIndex = middleIndex;
         break;
-      } else if (sortedArr[middleIndex] > minValue){
+      } else if (sortedArr[middleIndex] > minValue) {
         tempEndIndex = middleIndex;
-      } else if(sortedArr[middleIndex] < minValue){
+      } else if (sortedArr[middleIndex] < minValue) {
         tempStartIndex = middleIndex;
       }
-      if(tempEndIndex - tempStartIndex <= 1){
+      if (tempEndIndex - tempStartIndex <= 1) {
         startIndex = tempStartIndex;
-    
+
         break;
       }
-
     } while (true);
   }
   if (sortedArr[endIndex] > maxValue) {
     let tempStartIndex = startIndex;
     let tempEndIndex = endIndex;
     let middleIndex;
-   
+
     do {
       middleIndex = Math.ceil((tempEndIndex + tempStartIndex) / 2);
       if (sortedArr[middleIndex] == maxValue) {
         endIndex = middleIndex;
         break;
-      } else if (sortedArr[middleIndex] > maxValue){
+      } else if (sortedArr[middleIndex] > maxValue) {
         tempEndIndex = middleIndex;
-      } else if(sortedArr[middleIndex] < maxValue){
+      } else if (sortedArr[middleIndex] < maxValue) {
         tempStartIndex = middleIndex;
       }
-      if(tempEndIndex - tempStartIndex <= 1){
+      if (tempEndIndex - tempStartIndex <= 1) {
         endIndex = tempEndIndex;
-     
+
         break;
       }
-
     } while (true);
-
   }
-  return sortedArr.slice(startIndex, endIndex+1);
+  return sortedArr.slice(startIndex, endIndex + 1);
 }
 
-const timeStr = "2024-03-08_11-42-02";
-const arr = [1,3,4,7,9,14,17,21,30];
-console.log(filterByRange(arr, 6,17));
+
 
 let folderTimestamps = [];
-
-
 
 async function getFolders() {
   try {
@@ -107,69 +101,77 @@ async function getFolders() {
     return null;
   }
 }
+//constructs array of objects for treeview from unix timestamps
+//in milliseconds
+function constructTreeData(arrayOfTimestamps) {
+  let treeData = [];
+  for (let timestamp of arrayOfTimestamps) {
+    let node = {
+      text: localToUTCTimeStamp(timestamp),
+      icon: "fa fa-folder",
+      nodes: [
+        {
+          text: "cam-401",
+          icon: "fa-regular fa-image",
+          id: key + " cam401",
+          class: "cam_item",
+        },
+        {
+          text: "cam-404",
+          icon: "fa-regular fa-image",
+          id: key + " cam404",
+          class: "cam_item",
+        },
+        {
+          text: "cam-405",
+          icon: "fa-regular fa-image",
+          id: key + " cam405",
+          class: "cam_item",
+        },
+        {
+          text: "cam-407",
+          icon: "fa-regular fa-image",
+          id: key + " cam407",
+          class: "cam_item",
+        },
+        {
+          text: "cam-408",
+          icon: "fa-regular fa-image",
+          id: key + " cam408",
+          class: "cam_item",
+        },
+        {
+          text: "cam-409",
+          icon: "fa-regular fa-image",
+          id: key + " cam409",
+          class: "cam_item",
+        },
+        {
+          text: "cam-410",
+          icon: "fa-regular fa-image",
+          id: key + " cam410",
+          class: "cam_item",
+        },
+      ],
+    };
+    treeData.push(node);
+  }
+  return treeData;
+}
 document.addEventListener("DOMContentLoaded", () => {
-  
   getFolders().then((data) => {
     console.log(Object.keys(data).length);
     let treeData = [];
+    folderTimestamps = [];
     for (const [key, value] of Object.entries(data)) {
       if (value.length == 7) {
         folderTimestamps.push(toLocalTimeStr(key)[1]);
-        // let node = {
-        //   text: toLocalTimeStr(key)[0],
-        //   icon: "fa fa-folder",
-        //   nodes: [
-        //     {
-        //       text: "cam-401",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam401",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-404",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam404",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-405",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam405",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-407",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam407",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-408",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam408",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-409",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam409",
-        //       class: "cam_item",
-        //     },
-        //     {
-        //       text: "cam-410",
-        //       icon: "fa-regular fa-image",
-        //       id: key + " cam410",
-        //       class: "cam_item",
-        //     },
-        //   ],
-        // };
-        // treeData.push(node);
       }
     }
-    
-    folderTimestamps.sort((a,b) => a - b);
+    folderTimestamps.sort((a, b) => a - b);
     console.log(folderTimestamps);
     console.log(folderTimestamps.length);
+    treeData = constructTreeData(folderTimestamps.slice(-60));
     $("#tree").bstreeview({
       data: treeData,
     });
@@ -211,12 +213,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (startDateTime && endDateTime) {
       const startTimeStamp = new Date(startDateTime);
       const endTimeStamp = new Date(endDateTime);
-      const timeStampRange = filterByRange(folderTimestamps, startTimeStamp, endTimeStamp);
+      const timeStampRange = filterByRange(
+        folderTimestamps,
+        startTimeStamp,
+        endTimeStamp
+      );
       console.log(timeStampRange);
       console.log(timeStampRange.length);
-
-      
     }
   });
-
 });
