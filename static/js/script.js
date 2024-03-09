@@ -1,6 +1,5 @@
-// converts timestamps UTC (2024-03-06_18-23-22) into local (2024-03-06 22:23:22),
-// also returns local time in milliseconds
-function toLocalTimeStr(timeStr) {
+// converts timestamps UTC (2024-03-06_18-23-22) local time in milliseconds
+function toLocalUnixTime(timeStr) {
   let str = timeStr;
   [date, time] = str.split("_");
   time = time.replaceAll("-", ":");
@@ -165,11 +164,12 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(Object.keys(data).length);
     for (const [key, value] of Object.entries(data)) {
       if (value.length == 7) {
-        folderTimestamps.push(toLocalTimeStr(key));
+        folderTimestamps.push(toLocalUnixTime(key));
       }
     }
     folderTimestamps.sort((a, b) => a - b);
-    treeData = constructTreeData(folderTimestamps.slice(-60));
+    treeData = constructTreeData(folderTimestamps.slice(-30));
+    console.log("original " + treeData);
     $("#tree").bstreeview({
       data: treeData,
     });
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(startTimeStamp);
       console.log(endTimeStamp);
       treeData = constructTreeData(timeStampRange);
-      console.log(treeData);
+      console.log("filtered " + treeData);
       $("#tree").empty();
       $("#tree").bstreeview({
         data: treeData,
