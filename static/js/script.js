@@ -195,6 +195,24 @@ document.addEventListener("DOMContentLoaded", () => {
   //   });
   // });
 
-
+  let startDateTime = "";
+  let endDateTime = "";
+  jQuery("#startDateTime").datetimepicker({
+    onChangeDateTime: function (dp, $input) {
+      startDateTime = $input.val();
+    },
+  });
+  jQuery("#endDateTime").datetimepicker({
+    onChangeDateTime: function (dp, $input) {
+      endDateTime = $input.val();
+    },
+  });
+  $("#submit_timerange").on("click", function (event) {
+    if (startDateTime && endDateTime) {
+      console.log(`${startDateTime} --- ${endDateTime}`);
+      const dd = new Date(startDateTime);
+      console.log(dd);
+    }
+  });
 
 });
