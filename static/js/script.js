@@ -1,3 +1,5 @@
+// converts timestamps UTC (2024-03-06_18-23-22) into local (2024-03-06 22:23:22),
+// also returns local time in milliseconds
 function toLocalTimeStr(timeStr) {
   let str = timeStr;
   [date, time] = str.split("_");
@@ -13,6 +15,81 @@ function toLocalTimeStr(timeStr) {
     .replace("T", " ");
   return [localTimeString, localDate.getTime()];
 }
+
+//converts unix timestamp in milliseconds to timestamps as folder names are, like this, 2024-03-08_11-42-02
+function localToUTCTimeStamp(localUnixDate) {
+  const date = new Date(localUnixDate);
+  const str = date
+    .toISOString()
+    .slice(0, 19)
+    .replaceAll("T", "_")
+    .replaceAll(":", "-");
+  return str;
+}
+//receives sorted array (sortedArr) of integer numbers,
+//and returns new array of elements between min and max
+function filterByRange(sortedArr, minValue, maxValue) {
+  const len = sortedArr.length;
+  let startIndex = 0;
+  let endIndex = len - 1;
+  if (sortedArr[startIndex] < minValue) {
+    let tempStartIndex = startIndex;
+    let tempEndIndex = endIndex;
+    let middleIndex;
+
+    do {
+      middleIndex = Math.floor((tempEndIndex + tempStartIndex) / 2);
+      if (sortedArr[middleIndex] == minValue) {
+        startIndex = middleIndex;
+        break;
+      } else if (sortedArr[middleIndex] > minValue){
+        tempEndIndex = middleIndex;
+      } else if(sortedArr[middleIndex] < minValue){
+        tempStartIndex = middleIndex;
+      }
+      if(tempEndIndex - tempStartIndex <= 1){
+        startIndex = tempStartIndex;
+    
+        break;
+      }
+
+    } while (true);
+  }
+  if (sortedArr[endIndex] > maxValue) {
+    let tempStartIndex = startIndex;
+    let tempEndIndex = endIndex;
+    let middleIndex;
+   
+    do {
+      middleIndex = Math.ceil((tempEndIndex + tempStartIndex) / 2);
+      if (sortedArr[middleIndex] == maxValue) {
+        endIndex = middleIndex;
+        break;
+      } else if (sortedArr[middleIndex] > maxValue){
+        tempEndIndex = middleIndex;
+      } else if(sortedArr[middleIndex] < maxValue){
+        tempStartIndex = middleIndex;
+      }
+      if(tempEndIndex - tempStartIndex <= 1){
+        endIndex = tempEndIndex;
+     
+        break;
+      }
+
+    } while (true);
+
+  }
+  return sortedArr.slice(startIndex, endIndex+1);
+}
+
+const timeStr = "2024-03-08_11-42-02";
+const arr = [1,3,4,7,9,14,17,21,30];
+console.log(filterByRange(arr, 6,17));
+
+let folderTimestamps = [];
+
+
+
 async function getFolders() {
   try {
     const response = await fetch(
@@ -31,90 +108,93 @@ async function getFolders() {
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
-  let folderTimestamps = [];
-  getFolders().then((data) => {
-    console.log(Object.keys(data).length);
-    let treeData = [];
-    for (const [key, value] of Object.entries(data)) {
-      if (value.length == 7) {
-        folderTimestamps.push(toLocalTimeStr(key)[1]);
-        let node = {
-          text: toLocalTimeStr(key)[0],
-          icon: "fa fa-folder",
-          nodes: [
-            {
-              text: "cam-401",
-              icon: "fa-regular fa-image",
-              id: key + " cam401",
-              class: "cam_item",
-            },
-            {
-              text: "cam-404",
-              icon: "fa-regular fa-image",
-              id: key + " cam404",
-              class: "cam_item",
-            },
-            {
-              text: "cam-405",
-              icon: "fa-regular fa-image",
-              id: key + " cam405",
-              class: "cam_item",
-            },
-            {
-              text: "cam-407",
-              icon: "fa-regular fa-image",
-              id: key + " cam407",
-              class: "cam_item",
-            },
-            {
-              text: "cam-408",
-              icon: "fa-regular fa-image",
-              id: key + " cam408",
-              class: "cam_item",
-            },
-            {
-              text: "cam-409",
-              icon: "fa-regular fa-image",
-              id: key + " cam409",
-              class: "cam_item",
-            },
-            {
-              text: "cam-410",
-              icon: "fa-regular fa-image",
-              id: key + " cam410",
-              class: "cam_item",
-            },
-          ],
-        };
-        treeData.push(node);
-      }
-    }
-    console.log(treeData.length);
-    folderTimestamps.sort((a,b) => a - b);
-    console.log(folderTimestamps);
-    console.log(folderTimestamps.length);
-    $("#tree").bstreeview({
-      data: treeData,
-    });
-    $(".cam_item").on("click", function (event) {
-      console.log(event.target.id);
-      event.stopPropagation();
-      [timeStamp, filename] = event.target.id.split(" ");
-      fetch(
-        `https://records-np04-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
-      )
-        .then((response) => response.text())
-        .then((data) => {
-          const element = document.getElementById("screenshot");
-          if (element) {
-            element.remove();
-          }
-          const img = document.createElement("img");
-          img.setAttribute("id", "screenshot");
-          img.src = "data:image/jpeg;base64," + data;
-          document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-        })
-        .catch((error) => console.error("Error:", error));
-    });
-  });
+  
+  // getFolders().then((data) => {
+  //   console.log(Object.keys(data).length);
+  //   let treeData = [];
+  //   for (const [key, value] of Object.entries(data)) {
+  //     if (value.length == 7) {
+  //       folderTimestamps.push(toLocalTimeStr(key)[1]);
+  //       let node = {
+  //         text: toLocalTimeStr(key)[0],
+  //         icon: "fa fa-folder",
+  //         nodes: [
+  //           {
+  //             text: "cam-401",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam401",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-404",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam404",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-405",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam405",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-407",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam407",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-408",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam408",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-409",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam409",
+  //             class: "cam_item",
+  //           },
+  //           {
+  //             text: "cam-410",
+  //             icon: "fa-regular fa-image",
+  //             id: key + " cam410",
+  //             class: "cam_item",
+  //           },
+  //         ],
+  //       };
+  //       treeData.push(node);
+  //     }
+  //   }
+  //   console.log(treeData.length);
+  //   folderTimestamps.sort((a,b) => a - b);
+  //   console.log(folderTimestamps);
+  //   console.log(folderTimestamps.length);
+  //   $("#tree").bstreeview({
+  //     data: treeData,
+  //   });
+  //   $(".cam_item").on("click", function (event) {
+  //     console.log(event.target.id);
+  //     event.stopPropagation();
+  //     [timeStamp, filename] = event.target.id.split(" ");
+  //     fetch(
+  //       `https://records-np04-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
+  //     )
+  //       .then((response) => response.text())
+  //       .then((data) => {
+  //         const element = document.getElementById("screenshot");
+  //         if (element) {
+  //           element.remove();
+  //         }
+  //         const img = document.createElement("img");
+  //         img.setAttribute("id", "screenshot");
+  //         img.src = "data:image/jpeg;base64," + data;
+  //         document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+  //       })
+  //       .catch((error) => console.error("Error:", error));
+  //   });
+  // });
+
+
+
 });
