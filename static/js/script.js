@@ -169,7 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     folderTimestamps.sort((a, b) => a - b);
     treeData = constructTreeData(folderTimestamps.slice(-30));
-    console.log("original " + treeData);
+    console.log("original")
+    console.log(treeData);
     $("#tree").bstreeview({
       data: treeData,
     });
@@ -218,7 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(startTimeStamp);
       console.log(endTimeStamp);
       treeData = constructTreeData(timeStampRange);
-      console.log("filtered " + treeData);
+      console.log("filtered");
+      console.log(treeData);
       $("#tree").empty();
       $("#tree").bstreeview({
         data: treeData,
