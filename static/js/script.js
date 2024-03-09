@@ -215,8 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
         startTimeStamp,
         endTimeStamp
       );
-      console.log(timeStampRange);
-      console.log(timeStampRange.length);
+      treeData = constructTreeData(timeStampRange);
+      $("#tree").bstreeview({
+        data: treeData,
+      });
     }
   });
 });
