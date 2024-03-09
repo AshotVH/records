@@ -4,16 +4,15 @@ function toLocalTimeStr(timeStr) {
   let str = timeStr;
   [date, time] = str.split("_");
   time = time.replaceAll("-", ":");
-  str = date + " " + time + " UTC";
+  str = date + " " + time;
   utcDate = new Date(str);
   const localDate = new Date(
     utcDate.getTime() - utcDate.getTimezoneOffset() * 60000
   );
-  const localTimeString = localDate
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
-  return [localTimeString, localDate.getTime()];
+  console.log("localdate " + localDate);
+  const localUnixTimeStamp = localDate.getTime();
+  const localTimeString = localDate.toString().slice(4,31);
+  return [localTimeString, localUnixTimeStamp];
 }
 
 //converts unix timestamp in milliseconds to timestamps as folder names are, like this, 2024-03-08_11-42-02
