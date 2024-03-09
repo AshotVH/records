@@ -221,7 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
       treeData = constructTreeData(timeStampRange);
       console.log("filtered");
       console.log(treeData);
-      $("#tree").empty();
+      $("#tree").remove();
+      $("#tree_wrapper").append('<div id="tree"></div>');
       $("#tree").bstreeview({
         data: treeData,
       });
