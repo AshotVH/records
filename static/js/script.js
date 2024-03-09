@@ -9,10 +9,9 @@ function toLocalTimeStr(timeStr) {
   const localDate = new Date(
     utcDate.getTime() - utcDate.getTimezoneOffset() * 60000
   );
-  console.log("localdate " + localDate);
+ 
   const localUnixTimeStamp = localDate.getTime();
-  const localTimeString = localDate.toString().slice(4,31);
-  return [localTimeString, localUnixTimeStamp];
+  return localUnixTimeStamp;
 }
 
 //converts unix timestamp in milliseconds to timestamps as folder names are, like this, 2024-03-08_11-42-02
@@ -25,9 +24,7 @@ function localToUTCTimeStamp(localUnixDate) {
     .replaceAll(":", "-");
   return str;
 }
-const d = new Date();
-console.log(d);
-console.log(localToUTCTimeStamp(d.getTime()));
+
 
 //receives sorted array (sortedArr) of integer numbers,
 //and returns new array of elements between min and max
@@ -168,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     folderTimestamps = [];
     for (const [key, value] of Object.entries(data)) {
       if (value.length == 7) {
-        folderTimestamps.push(toLocalTimeStr(key)[1]);
+        folderTimestamps.push(toLocalTimeStr(key));
       }
     }
     folderTimestamps.sort((a, b) => a - b);
