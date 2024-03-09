@@ -106,50 +106,51 @@ async function getFolders() {
 function constructTreeData(arrayOfTimestamps) {
   let treeData = [];
   for (let timestamp of arrayOfTimestamps) {
+    const folderUTCTImestamp = localToUTCTimeStamp(timestamp);
     let node = {
-      text: localToUTCTimeStamp(timestamp),
+      text: folderUTCTImestamp,
       icon: "fa fa-folder",
       nodes: [
         {
           text: "cam-401",
           icon: "fa-regular fa-image",
-          id: key + " cam401",
+          id: folderUTCTImestamp + " cam401",
           class: "cam_item",
         },
         {
           text: "cam-404",
           icon: "fa-regular fa-image",
-          id: key + " cam404",
+          id: folderUTCTImestamp + " cam404",
           class: "cam_item",
         },
         {
           text: "cam-405",
           icon: "fa-regular fa-image",
-          id: key + " cam405",
+          id: folderUTCTImestamp + " cam405",
           class: "cam_item",
         },
         {
           text: "cam-407",
           icon: "fa-regular fa-image",
-          id: key + " cam407",
+          id: folderUTCTImestamp + " cam407",
           class: "cam_item",
         },
         {
           text: "cam-408",
           icon: "fa-regular fa-image",
-          id: key + " cam408",
+          id: folderUTCTImestamp + " cam408",
           class: "cam_item",
         },
         {
           text: "cam-409",
           icon: "fa-regular fa-image",
-          id: key + " cam409",
+          id: folderUTCTImestamp + " cam409",
           class: "cam_item",
         },
         {
           text: "cam-410",
           icon: "fa-regular fa-image",
-          id: key + " cam410",
+          id: folderUTCTImestamp + " cam410",
           class: "cam_item",
         },
       ],
