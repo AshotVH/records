@@ -26,6 +26,9 @@ function localToUTCTimeStamp(localUnixDate) {
     .replaceAll(":", "-");
   return str;
 }
+const d = new Date();
+console.log(d);
+console.log(localToUTCTimeStamp(d.getTime()));
 
 //receives sorted array (sortedArr) of integer numbers,
 //and returns new array of elements between min and max
@@ -106,7 +109,7 @@ async function getFolders() {
 function constructTreeData(arrayOfTimestamps) {
   let treeData = [];
   for (let timestamp of arrayOfTimestamps) {
-    const folderUTCTImestamp = localToUTCTimeStamp(timestamp);
+    let folderUTCTImestamp = localToUTCTimeStamp(timestamp);
     let node = {
       text: folderUTCTImestamp,
       icon: "fa fa-folder",
@@ -172,6 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
     folderTimestamps.sort((a, b) => a - b);
     console.log(folderTimestamps);
     console.log(folderTimestamps.length);
+    let ddate = new Date(folderTimestamps[folderTimestamps.length - 1]);
+    console.log("folderTimestamp" + ddate);
     treeData = constructTreeData(folderTimestamps.slice(-60));
     $("#tree").bstreeview({
       data: treeData,
