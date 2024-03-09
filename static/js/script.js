@@ -171,9 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
     treeData = constructTreeData(folderTimestamps.slice(-30));
     console.log("original")
     console.log(treeData);
-    // $("#tree").bstreeview({
-    //   data: treeData,
-    // });
+    $("#tree").bstreeview({
+      data: treeData,
+    });
     $(".cam_item").on("click", function (event) {
       event.stopPropagation();
       [timeStamp, filename] = event.target.id.split(" ");
