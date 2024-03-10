@@ -167,7 +167,7 @@ function constructTreeData(arrayOfTimestamps) {
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
-  folderTimestamps = [];
+  folderTimestamps = []; //UNIX time in milliseconds
   let treeData = [];
   getFolders().then((data) => {
     console.log(Object.keys(data).length);
