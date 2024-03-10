@@ -23,6 +23,14 @@ function localToUTCTimeStamp(localUnixDate) {
     .replaceAll(":", "-");
   return str;
 }
+//formats local time unix timestamp in milliseconds 
+function localTimeFormatted(localUnixDate){
+  const date = new Date(localUnixDate);
+  const str = date
+    .toString()
+    .slice(4, 31);
+  return str;
+}
 
 
 //receives sorted array (sortedArr) of integer numbers,
@@ -105,8 +113,9 @@ function constructTreeData(arrayOfTimestamps) {
   let treeData = [];
   for (let timestamp of arrayOfTimestamps) {
     let folderUTCTImestamp = localToUTCTimeStamp(timestamp);
+    let formattedTime = localTimeFormatted(timestamp);
     let node = {
-      text: folderUTCTImestamp,
+      text: formattedTime,
       icon: "fa fa-folder",
       nodes: [
         {
