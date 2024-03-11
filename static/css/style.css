@@ -22,22 +22,14 @@ body {
   background-color: #0d6efd;
   color: white;
 }
-.screenshot{
+.screenshot {
   width: 100%;
-  object-fit: cover;
 }
-.bstreeview{
+.bstreeview {
   height: 80vh;
   overflow-y: scroll;
 }
-.timerange{
+.timerange {
   padding-bottom: 10px;
   border-bottom: 1px solid white;
-}
-.img_fullscreen{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 99vw !important;
-  height: auto !important;
 }
