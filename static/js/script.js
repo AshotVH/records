@@ -93,14 +93,12 @@ let folderTimestamps = [];
 async function getFolders() {
   try {
     const response = await fetch(
-      "https://records-np04-slow-control.app.cern.ch/get_folders"
+      "/get_folders"
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    console.log("data");
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -170,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
   folderTimestamps = []; //UNIX time in milliseconds
   let treeData = [];
   getFolders().then((data) => {
-    console.log(Object.keys(data).length);
     for (const [key, value] of Object.entries(data)) {
       if (value.length == 7) {
         folderTimestamps.push(toLocalUnixTime(key));
@@ -178,8 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     folderTimestamps.sort((a, b) => a - b);
     treeData = constructTreeData(folderTimestamps.slice(-30));
-    console.log("original")
-    console.log(treeData);
     $("#tree").bstreeview({
       data: treeData,
     });
@@ -187,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.stopPropagation();
       [timeStamp, filename] = event.target.id.split(" ");
       fetch(
-        `https://records-np04-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
+        `/files/${timeStamp}/${filename}`
       )
         .then((response) => response.text())
         .then((data) => {
@@ -225,11 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startTimeStamp,
         endTimeStamp
       );
-      console.log(startTimeStamp);
-      console.log(endTimeStamp);
       treeData = constructTreeData(timeStampRange);
-      console.log("filtered");
-      console.log(treeData);
       $("#tree").remove();
       $("#tree_wrapper").append('<div id="tree"></div>');
       $("#tree").bstreeview({
@@ -239,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.stopPropagation();
         [timeStamp, filename] = event.target.id.split(" ");
         fetch(
-          `https://records-np04-slow-control.app.cern.ch/files/${timeStamp}/${filename}`
+          `/files/${timeStamp}/${filename}`
         )
           .then((response) => response.text())
           .then((data) => {
