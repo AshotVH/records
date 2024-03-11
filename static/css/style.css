@@ -23,7 +23,8 @@ body {
   color: white;
 }
 #screenshot{
-  width: 100%;
+  /* width: 100%; */
+  object-fit: cover;
 }
 .bstreeview{
   height: 80vh;
