@@ -191,9 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
             element.remove();
           }
           const img = document.createElement("img");
-          img.setAttribute("id", "screenshot");
+          img.setAttribute("class", "screenshot");
           img.src = "data:image/jpeg;base64," + data;
           document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+          document.getElementsByClassName("img_wrapper")[1].appendChild(img);
         })
         .catch((error) => console.error("Error:", error));
     });
