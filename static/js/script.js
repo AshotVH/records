@@ -8,7 +8,7 @@ function toLocalUnixTime(timeStr) {
   const localDate = new Date(
     utcDate.getTime() - utcDate.getTimezoneOffset() * 60000
   );
-
+ 
   const localUnixTimeStamp = localDate.getTime();
   return localUnixTimeStamp;
 }
@@ -23,12 +23,15 @@ function localToUTCTimeStamp(localUnixDate) {
     .replaceAll(":", "-");
   return str;
 }
-//formats local time unix timestamp in milliseconds
-function localTimeFormatted(localUnixDate) {
+//formats local time unix timestamp in milliseconds 
+function localTimeFormatted(localUnixDate){
   const date = new Date(localUnixDate);
-  const str = date.toString().slice(4, 31);
+  const str = date
+    .toString()
+    .slice(4, 31);
   return str;
 }
+
 
 //receives sorted array (sortedArr) of integer numbers,
 //and returns new array of elements between min and max
@@ -83,11 +86,15 @@ function filterByRange(sortedArr, minValue, maxValue) {
   return sortedArr.slice(startIndex, endIndex + 1);
 }
 
+
+
 let folderTimestamps = [];
 
 async function getFolders() {
   try {
-    const response = await fetch("/get_folders");
+    const response = await fetch(
+      "/get_folders"
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -174,7 +181,9 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".cam_item").on("click", function (event) {
       event.stopPropagation();
       [timeStamp, filename] = event.target.id.split(" ");
-      fetch(`/files/${timeStamp}/${filename}`)
+      fetch(
+        `/files/${timeStamp}/${filename}`
+      )
         .then((response) => response.text())
         .then((data) => {
           const element = document.getElementById("screenshot");
@@ -182,13 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
             element.remove();
           }
           const img = document.createElement("img");
-          img.setAttribute("class", "screenshot");
+          img.setAttribute("id", "screenshot");
           img.src = "data:image/jpeg;base64," + data;
-          console.log(document.getElementsByClassName("img_wrapper")[0]);
-          console.log(document.getElementsByClassName("img_wrapper")[1]);
-          const img_wrappers = document.getElementsByClassName("img_wrapper");
-          img_wrappers[0].appendChild(img);
-          img_wrappers[1].appendChild(img);
+          document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+          
         })
         .catch((error) => console.error("Error:", error));
     });
@@ -224,7 +230,9 @@ document.addEventListener("DOMContentLoaded", () => {
       $(".cam_item").on("click", function (event) {
         event.stopPropagation();
         [timeStamp, filename] = event.target.id.split(" ");
-        fetch(`/files/${timeStamp}/${filename}`)
+        fetch(
+          `/files/${timeStamp}/${filename}`
+        )
           .then((response) => response.text())
           .then((data) => {
             const element = document.getElementById("screenshot");
