@@ -22,8 +22,8 @@ body {
   background-color: #0d6efd;
   color: white;
 }
-#screenshot{
-  /* width: 100%; */
+.screenshot{
+  width: 100%;
   object-fit: cover;
 }
 .bstreeview{
@@ -38,6 +38,6 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 99vw;
-  height: auto;
+  width: 99vw !important;
+  height: auto !important;
 }
