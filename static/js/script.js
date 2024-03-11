@@ -185,10 +185,9 @@ document.addEventListener("DOMContentLoaded", () => {
           img.setAttribute("id", "screenshot");
           img.src = "data:image/jpeg;base64," + data;
           document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-          $("#screenshot").on("click", function(){
+          $("#screenshot").on("click", function () {
             $(this).toggleClass("img_fullscreen");
           });
-        
         })
         .catch((error) => console.error("Error:", error));
     });
@@ -235,6 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
             img.setAttribute("id", "screenshot");
             img.src = "data:image/jpeg;base64," + data;
             document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+            $("#screenshot").on("click", function () {
+              $(this).toggleClass("img_fullscreen");
+            });
           })
           .catch((error) => console.error("Error:", error));
       });

@@ -35,6 +35,8 @@ body {
 }
 .img_fullscreen{
   position: fixed;
+  top: 0;
+  left: 0;
   width: 99vw;
   height: 99vh;
 }
