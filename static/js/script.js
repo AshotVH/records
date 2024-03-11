@@ -186,9 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
           img.src = "data:image/jpeg;base64," + data;
           console.log(document.getElementsByClassName("img_wrapper")[0]);
           console.log(document.getElementsByClassName("img_wrapper")[1]);
-          document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-
-          document.getElementsByClassName("img_wrapper")[1].appendChild(img);
+          const img_wrappers = document.getElementsByClassName("img_wrapper");
+          img_wrappers[0].appendChild(img);
+          img_wrappers[1].appendChild(img);
         })
         .catch((error) => console.error("Error:", error));
     });
