@@ -43,9 +43,9 @@ def index():
     else:
         return redirect(url_for('login'))
 
-@app.route('/get_folders')
-def get_folders():
-    response = requests.get(f"{API_ADDRESS}/folders")
+@app.route('/np04_get_files_list/<cam_name>/<start_date>/<end_date>')
+def np04_get_files_list():
+    response = requests.get(f"{API_ADDRESS}/np04_get_files_list/<cam_name>/<start_date>/<end_date>")
     return response.json()
 
 @app.route('/files/<folder_name>/<filename>')

@@ -204,8 +204,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   $("#submit_timerange").on("click", function (event) {
     if (startDateTime && endDateTime) {
+      const startDate = startDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_");
+      const endDate = endDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_");
+
+      cam_name = "np04_cam401"
+      fetch(`/np04_get_files_list/${cam_name}/${startDate}/${endDate}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('JSON Data:', data); 
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error); 
+      });
+    
       const startTimeStamp = new Date(startDateTime);
       const endTimeStamp = new Date(endDateTime);
+      
+   
+
+
+
+      console.log(endTimeStamp);
+
       const timeStampRange = filterByRange(
         folderTimestamps,
         startTimeStamp,
