@@ -32,145 +32,87 @@ function localTimeFormatted(localUnixDate) {
 
 //receives sorted array (sortedArr) of integer numbers,
 //and returns new array of elements between min and max
-function filterByRange(sortedArr, minValue, maxValue) {
-  const len = sortedArr.length;
-  let startIndex = 0;
-  let endIndex = len - 1;
-  if (sortedArr[startIndex] < minValue) {
-    let tempStartIndex = startIndex;
-    let tempEndIndex = endIndex;
-    let middleIndex;
+// function filterByRange(sortedArr, minValue, maxValue) {
+//   const len = sortedArr.length;
+//   let startIndex = 0;
+//   let endIndex = len - 1;
+//   if (sortedArr[startIndex] < minValue) {
+//     let tempStartIndex = startIndex;
+//     let tempEndIndex = endIndex;
+//     let middleIndex;
 
-    do {
-      middleIndex = Math.floor((tempEndIndex + tempStartIndex) / 2);
-      if (sortedArr[middleIndex] == minValue) {
-        startIndex = middleIndex;
-        break;
-      } else if (sortedArr[middleIndex] > minValue) {
-        tempEndIndex = middleIndex;
-      } else if (sortedArr[middleIndex] < minValue) {
-        tempStartIndex = middleIndex;
-      }
-      if (tempEndIndex - tempStartIndex <= 1) {
-        startIndex = tempStartIndex;
+//     do {
+//       middleIndex = Math.floor((tempEndIndex + tempStartIndex) / 2);
+//       if (sortedArr[middleIndex] == minValue) {
+//         startIndex = middleIndex;
+//         break;
+//       } else if (sortedArr[middleIndex] > minValue) {
+//         tempEndIndex = middleIndex;
+//       } else if (sortedArr[middleIndex] < minValue) {
+//         tempStartIndex = middleIndex;
+//       }
+//       if (tempEndIndex - tempStartIndex <= 1) {
+//         startIndex = tempStartIndex;
 
-        break;
-      }
-    } while (true);
-  }
-  if (sortedArr[endIndex] > maxValue) {
-    let tempStartIndex = startIndex;
-    let tempEndIndex = endIndex;
-    let middleIndex;
+//         break;
+//       }
+//     } while (true);
+//   }
+//   if (sortedArr[endIndex] > maxValue) {
+//     let tempStartIndex = startIndex;
+//     let tempEndIndex = endIndex;
+//     let middleIndex;
 
-    do {
-      middleIndex = Math.ceil((tempEndIndex + tempStartIndex) / 2);
-      if (sortedArr[middleIndex] == maxValue) {
-        endIndex = middleIndex;
-        break;
-      } else if (sortedArr[middleIndex] > maxValue) {
-        tempEndIndex = middleIndex;
-      } else if (sortedArr[middleIndex] < maxValue) {
-        tempStartIndex = middleIndex;
-      }
-      if (tempEndIndex - tempStartIndex <= 1) {
-        endIndex = tempEndIndex;
+//     do {
+//       middleIndex = Math.ceil((tempEndIndex + tempStartIndex) / 2);
+//       if (sortedArr[middleIndex] == maxValue) {
+//         endIndex = middleIndex;
+//         break;
+//       } else if (sortedArr[middleIndex] > maxValue) {
+//         tempEndIndex = middleIndex;
+//       } else if (sortedArr[middleIndex] < maxValue) {
+//         tempStartIndex = middleIndex;
+//       }
+//       if (tempEndIndex - tempStartIndex <= 1) {
+//         endIndex = tempEndIndex;
 
-        break;
-      }
-    } while (true);
-  }
-  return sortedArr.slice(startIndex, endIndex + 1);
-}
+//         break;
+//       }
+//     } while (true);
+//   }
+//   return sortedArr.slice(startIndex, endIndex + 1);
+// }
 
-let folderTimestamps = [];
+// let folderTimestamps = [];
 
-async function getFolders() {
-  try {
-    const response = await fetch("/get_folders");
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-}
+// async function getFolders() {
+//   try {
+//     const response = await fetch("/get_folders");
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok");
+//     }
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     return null;
+//   }
+// }
 //constructs array of objects for treeview from unix timestamps
 //in milliseconds
-function constructTreeData(arrayOfTimestamps) {
+function constructTreeData(arrayOfFileNames) {
   let treeData = [];
-  for (let timestamp of arrayOfTimestamps) {
-    let folderUTCTImestamp = localToUTCTimeStamp(timestamp);
-    let formattedTime = localTimeFormatted(timestamp);
+  for (let fileName of arrayOfTimestamps) {
     let node = {
-      text: formattedTime,
+      text: fileName,
       icon: "fa fa-folder",
-      nodes: [
-        {
-          text: "cam-401",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam401",
-          class: "cam_item",
-        },
-        {
-          text: "cam-404",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam404",
-          class: "cam_item",
-        },
-        {
-          text: "cam-405",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam405",
-          class: "cam_item",
-        },
-        {
-          text: "cam-407",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam407",
-          class: "cam_item",
-        },
-        {
-          text: "cam-408",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam408",
-          class: "cam_item",
-        },
-        {
-          text: "cam-409",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam409",
-          class: "cam_item",
-        },
-        {
-          text: "cam-410",
-          icon: "fa-regular fa-image",
-          id: folderUTCTImestamp + " cam410",
-          class: "cam_item",
-        },
-      ],
     };
     treeData.push(node);
   }
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
-  folderTimestamps = []; //UNIX time in milliseconds
-  let treeData = [];
-  getFolders().then((data) => {
-    for (const [key, value] of Object.entries(data)) {
-      if (value.length == 7) {
-        folderTimestamps.push(toLocalUnixTime(key));
-      }
-    }
-    folderTimestamps.sort((a, b) => a - b);
-    treeData = constructTreeData(folderTimestamps.slice(-30));
-    $("#tree").bstreeview({
-      data: treeData,
-    });
+   
     $(".cam_item").on("click", function (event) {
       event.stopPropagation();
       [timeStamp, filename] = event.target.id.split(" ");
@@ -217,7 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(data => {
-        console.log('JSON Data:', data); 
+        console.log('JSON Data:', data);
+        constructTreeData(data);
+        $("#tree").bstreeview({
+          data: treeData,
+        });
       })
       .catch(error => {
         console.error('Error fetching data:', error); 
