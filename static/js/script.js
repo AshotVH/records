@@ -40,13 +40,61 @@ function utcToLocal(utcTime) {
   return `${localYear}_${localMonth}_${localDay}_${localHour}_${localMinute}`;
 }
 
+/**
+ * Converts a local time string (YYYY-MM-DD_HH-MM-SS) to UTC format
+ * @param {string} localTime - Local time string in the format YYYY-MM-DD_HH-MM-SS
+ * @returns {string} - UTC time string in the same format
+ */
+function fileNamelocalToUTC(localTime) {
+  const [datePart, timePart] = localTime.split("_");
+  const [year, month, day] = datePart.split("-").map(Number);
+  const [hour, minute, second] = timePart.split("-").map(Number);
+
+  // Create a Date object in local time
+  const localDate = new Date(year, month - 1, day, hour, minute, second);
+
+  // Convert to UTC and format the result
+  const utcDate = new Date(localDate.toISOString());
+  const utcYear = utcDate.getUTCFullYear();
+  const utcMonth = String(utcDate.getUTCMonth() + 1).padStart(2, "0");
+  const utcDay = String(utcDate.getUTCDate()).padStart(2, "0");
+  const utcHour = String(utcDate.getUTCHours()).padStart(2, "0");
+  const utcMinute = String(utcDate.getUTCMinutes()).padStart(2, "0");
+  const utcSecond = String(utcDate.getUTCSeconds()).padStart(2, "0");
+
+  return `${utcYear}-${utcMonth}-${utcDay}_${utcHour}-${utcMinute}-${utcSecond}`;
+}
+
+/**
+ * Converts a UTC time string (YYYY-MM-DD_HH-MM-SS) to local time
+ * @param {string} utcTime - UTC time string in the format YYYY-MM-DD_HH-MM-SS
+ * @returns {string} - Local time string in the same format
+ */
+function fileNameutcToLocal(utcTime) {
+  const [datePart, timePart] = utcTime.split("_");
+  const [year, month, day] = datePart.split("-").map(Number);
+  const [hour, minute, second] = timePart.split("-").map(Number);
+
+  // Create a Date object in UTC
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+
+  // Convert to local time and format the result
+  const localYear = utcDate.getFullYear();
+  const localMonth = String(utcDate.getMonth() + 1).padStart(2, "0");
+  const localDay = String(utcDate.getDate()).padStart(2, "0");
+  const localHour = String(utcDate.getHours()).padStart(2, "0");
+  const localMinute = String(utcDate.getMinutes()).padStart(2, "0");
+  const localSecond = String(utcDate.getSeconds()).padStart(2, "0");
+
+  return `${localYear}-${localMonth}-${localDay}_${localHour}-${localMinute}-${localSecond}`;
+}
 
 
 function constructTreeData(arrayOfFileNames) {
   let treeData = [];
   for (let fullPath of arrayOfFileNames) {
     const parts = fullPath.split("/");
-    const fileName = parts[parts.length - 1].split("_").slice(2, 4).join("_").replace(".jpeg", "");
+    const fileName = fileNameutcToLocal(parts[parts.length - 1].split("_").slice(2, 4).join("_").replace(".jpeg", ""));
     let node = {
       text: fileName,
       icon: "fa-regular fa-image",
@@ -93,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
      
         $(".list-group-item").on("click", function (event) {
           event.stopPropagation();
-          buttonFileName = cam_name + "_" + event.target.textContent + ".jpeg";
+          buttonFileName = cam_name + "_" + fileNamelocalToUTC(event.target.textContent) + ".jpeg";
           console.log(buttonFileName);
           fetch(`/np04_get_file/${buttonFileName}`)
             .then((response) => response.text())
