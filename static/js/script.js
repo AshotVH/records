@@ -46,7 +46,7 @@ function constructTreeData(arrayOfFileNames) {
   let treeData = [];
   for (let fullPath of arrayOfFileNames) {
     const parts = fullPath.split("/");
-    const fileName = parts[parts.length - 1].split("_").slice(2, 4).join("_").split(".").slice(0,1).join("");
+    const fileName = parts[parts.length - 1].split("_").slice(2, 4).join("_").replace(".jpeg", "");
     let node = {
       text: fileName,
       icon: "fa-regular fa-image",
