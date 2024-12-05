@@ -102,10 +102,12 @@ function localTimeFormatted(localUnixDate) {
 //in milliseconds
 function constructTreeData(arrayOfFileNames) {
   let treeData = [];
-  for (let fileName of arrayOfFileNames) {
+  for (let fullPath of arrayOfFileNames) {
+    const parts = fullPath.split("/");
+    const fileName = parts[parts.length - 1];
     let node = {
       text: fileName,
-      icon: "fa fa-folder",
+      icon: "fa-regular fa-image",
        };
     treeData.push(node);
   }
