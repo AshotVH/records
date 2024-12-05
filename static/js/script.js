@@ -76,7 +76,9 @@ function fileNameutcToLocal(utcTime) {
   const [hour, minute, second] = timePart.split("-").map(Number);
 
   // Create a Date object in UTC
-  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+  const utcDate = new Date(
+    Date.UTC(year, month - 1, day, hour, minute, second)
+  );
 
   // Convert to local time and format the result
   const localYear = utcDate.getFullYear();
@@ -89,21 +91,30 @@ function fileNameutcToLocal(utcTime) {
   return `${localYear}-${localMonth}-${localDay}_${localHour}-${localMinute}-${localSecond}`;
 }
 
-
 function constructTreeData(arrayOfFileNames) {
   let treeData = [];
   for (let fullPath of arrayOfFileNames) {
     const parts = fullPath.split("/");
-    const fileName = fileNameutcToLocal(parts[parts.length - 1].split("_").slice(2, 4).join("_").replace(".jpeg", ""));
+    const fileName = fileNameutcToLocal(
+      parts[parts.length - 1]
+        .split("_")
+        .slice(2, 4)
+        .join("_")
+        .replace(".jpeg", "")
+    );
     let node = {
       text: fileName,
       icon: "fa-regular fa-image",
-       };
+    };
     treeData.push(node);
   }
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
+  let cam_name = "np04_cam401";
+  $(".btn-check").on("change", function (event) {
+    cam_name = event.target.id;
+  });
   let startDateTime = "";
   let endDateTime = "";
   jQuery("#startDateTime").datetimepicker({
@@ -118,50 +129,64 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   $("#submit_timerange").on("click", function (event) {
     if (startDateTime && endDateTime) {
-      const startDate = localToUTC(startDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_"));
-      const endDate = localToUTC(endDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_"));
-      console.log(startDate)
-      console.log(endDate)  
-      cam_name = "np04_cam401"
+      const startDate = localToUTC(
+        startDateTime
+          .replaceAll(" ", "_")
+          .replaceAll(":", "_")
+          .replaceAll("/", "_")
+      );
+      const endDate = localToUTC(
+        endDateTime
+          .replaceAll(" ", "_")
+          .replaceAll(":", "_")
+          .replaceAll("/", "_")
+      );
+
+
       fetch(`/np04_get_files_list/${cam_name}/${startDate}/${endDate}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('JSON Data:', data);
-        const treeData = constructTreeData(data);
-        $("#tree").remove();
-        $("#tree_wrapper").append('<div id="tree"></div>');
-        $("#tree").bstreeview({
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("JSON Data:", data);
+          const treeData = constructTreeData(data);
+          $("#tree").remove();
+          $("#tree_wrapper").append('<div id="tree"></div>');
+          $("#tree").bstreeview({
             data: treeData,
+          });
+
+          $(".list-group-item").on("click", function (event) {
+            event.stopPropagation();
+            buttonFileName =
+              cam_name +
+              "_" +
+              fileNamelocalToUTC(event.target.textContent) +
+              ".jpeg";
+            console.log(buttonFileName);
+            fetch(`/np04_get_file/${buttonFileName}`)
+              .then((response) => response.text())
+              .then((data) => {
+                const element = document.getElementById("screenshot");
+                if (element) {
+                  element.remove();
+                }
+                const img = document.createElement("img");
+                img.setAttribute("id", "screenshot");
+                img.src = "data:image/jpeg;base64," + data;
+                document
+                  .getElementsByClassName("img_wrapper")[0]
+                  .appendChild(img);
+              })
+              .catch((error) => console.error("Error:", error));
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
-     
-        $(".list-group-item").on("click", function (event) {
-          event.stopPropagation();
-          buttonFileName = cam_name + "_" + fileNamelocalToUTC(event.target.textContent) + ".jpeg";
-          console.log(buttonFileName);
-          fetch(`/np04_get_file/${buttonFileName}`)
-            .then((response) => response.text())
-            .then((data) => {
-              const element = document.getElementById("screenshot");
-              if (element) {
-                element.remove();
-              }
-              const img = document.createElement("img");
-              img.setAttribute("id", "screenshot");
-              img.src = "data:image/jpeg;base64," + data;
-              document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-            })
-            .catch((error) => console.error("Error:", error));
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error); 
-      });
-      
     }
   });
 });

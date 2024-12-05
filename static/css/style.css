@@ -4,6 +4,9 @@ html {
 body {
   background-color: #004c93;
 }
+.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+  max-width: 90vw;
+}
 .page_header {
   padding-top: 20px !important;
   padding-bottom: 10px;
