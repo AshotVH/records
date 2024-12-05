@@ -48,9 +48,9 @@ def np04_get_files_list(cam_name, start_date, end_date):
     response = requests.get(f"{API_ADDRESS}/np04_get_files_list/{cam_name}/{start_date}/{end_date}")
     return response.json()
 
-@app.route('/files/<folder_name>/<filename>')
-def get_file(folder_name, filename):
-    response = requests.get(f"{API_ADDRESS}/files/{folder_name}/{filename}")
+@app.route('/np04_get_file/<file_path>')
+def np04_get_file(file_path):
+    response = requests.get(f"{API_ADDRESS}/np04_get_file/{file_path}")
     if response.status_code == 200:
         file_content = response.content
         encoded_content = base64.b64encode(file_content)

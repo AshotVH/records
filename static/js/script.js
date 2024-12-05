@@ -156,28 +156,26 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#tree").remove();
         $("#tree_wrapper").append('<div id="tree"></div>');
         $("#tree").bstreeview({
-        data: treeData,
+            data: treeData,
         });
-        // $("#tree").bstreeview({
-        //   data: treeData,
-        // });
+     
         $(".list-group-item").on("click", function (event) {
           event.stopPropagation();
           buttonFileName = event.target.textContent;
           console.log(buttonFileName);
-          // fetch(`/files/${timeStamp}/${filename}`)
-          //   .then((response) => response.text())
-          //   .then((data) => {
-          //     const element = document.getElementById("screenshot");
-          //     if (element) {
-          //       element.remove();
-          //     }
-          //     const img = document.createElement("img");
-          //     img.setAttribute("id", "screenshot");
-          //     img.src = "data:image/jpeg;base64," + data;
-          //     document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-          //   })
-          //   .catch((error) => console.error("Error:", error));
+          fetch(`/np04_get_file/${buttonFileName}`)
+            .then((response) => response.text())
+            .then((data) => {
+              const element = document.getElementById("screenshot");
+              if (element) {
+                element.remove();
+              }
+              const img = document.createElement("img");
+              img.setAttribute("id", "screenshot");
+              img.src = "data:image/jpeg;base64," + data;
+              document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+            })
+            .catch((error) => console.error("Error:", error));
         });
       })
       .catch(error => {
