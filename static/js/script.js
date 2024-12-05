@@ -206,7 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (startDateTime && endDateTime) {
       const startDate = startDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_");
       const endDate = endDateTime.replaceAll(" ","_").replaceAll(":","_").replaceAll("/","_");
-
+      console.log(startDate)
+      console.log(endDate)  
       cam_name = "np04_cam401"
       fetch(`/np04_get_files_list/${cam_name}/${startDate}/${endDate}`)
       .then(response => {
