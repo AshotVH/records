@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return response.json();
         })
         .then((data) => {
-          console.log("JSON Data:", data);
+        
           const treeData = constructTreeData(data);
           $("#tree").remove();
           $("#tree_wrapper").append('<div id="tree"></div>');
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
               "_" +
               fileNamelocalToUTC(event.target.textContent) +
               ".jpeg";
-            console.log(buttonFileName);
+            
             fetch(`/np04_get_file/${buttonFileName}`)
               .then((response) => response.text())
               .then((data) => {
