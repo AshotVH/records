@@ -150,10 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(data => {
         console.log('JSON Data:', data);
-        // const treeData = constructTreeData(data);
-        // $("#tree").bstreeview({
-        //   data: treeData,
-        // });
+        const treeData = constructTreeData(data);
+        $("#tree").bstreeview({
+          data: treeData,
+        });
         // $(".cam_item").on("click", function (event) {
         //   event.stopPropagation();
         //   [timeStamp, filename] = event.target.id.split(" ");
