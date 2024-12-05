@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
      
         $(".list-group-item").on("click", function (event) {
           event.stopPropagation();
-          buttonFileName = event.target.textContent;
+          buttonFileName = cam_name + "_" + event.target.textContent + ".jpeg";
           console.log(buttonFileName);
           fetch(`/np04_get_file/${buttonFileName}`)
             .then((response) => response.text())
