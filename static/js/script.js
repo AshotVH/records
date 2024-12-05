@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#tree").bstreeview({
           data: treeData,
         });
-        $(".cam_item").on("click", function (event) {
+        $(".list-group-item").on("click", function (event) {
           event.stopPropagation();
           buttonFileName = event.target.textContent;
           console.log(buttonFileName);
