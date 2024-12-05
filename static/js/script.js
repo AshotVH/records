@@ -185,12 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log(endTimeStamp);
 
-      const timeStampRange = filterByRange(
-        folderTimestamps,
-        startTimeStamp,
-        endTimeStamp
-      );
-      treeData = constructTreeData(timeStampRange);
+      // const timeStampRange = filterByRange(
+      //   folderTimestamps,
+      //   startTimeStamp,
+      //   endTimeStamp
+      // );
+      // treeData = constructTreeData(timeStampRange);
       $("#tree").remove();
       $("#tree_wrapper").append('<div id="tree"></div>');
       $("#tree").bstreeview({
