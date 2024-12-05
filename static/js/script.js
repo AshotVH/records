@@ -39,14 +39,14 @@ function utcToLocal(utcTime) {
 
   return `${localYear}_${localMonth}_${localDay}_${localHour}_${localMinute}`;
 }
-console.log(utcToLocal('2024_12_04_01_00'));
+
 
 
 function constructTreeData(arrayOfFileNames) {
   let treeData = [];
   for (let fullPath of arrayOfFileNames) {
     const parts = fullPath.split("/");
-    const fileName = parts[parts.length - 1].split("_").slice(2, 4).join("_");
+    const fileName = parts[parts.length - 1].split("_").slice(2, 4).join("_").split(".").slice(0,1).join("");
     let node = {
       text: fileName,
       icon: "fa-regular fa-image",
