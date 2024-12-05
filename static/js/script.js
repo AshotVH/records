@@ -106,31 +106,21 @@ function constructTreeData(arrayOfFileNames) {
     let node = {
       text: fileName,
       icon: "fa fa-folder",
-    };
+       };
     treeData.push(node);
   }
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
+  folderTimestamps = []; //UNIX time in milliseconds
+  let treeData = [];
+
+  
+    // folderTimestamps.sort((a, b) => a - b);
+    // treeData = constructTreeData(folderTimestamps.slice(-30));
    
-    $(".cam_item").on("click", function (event) {
-      event.stopPropagation();
-      [timeStamp, filename] = event.target.id.split(" ");
-      fetch(`/files/${timeStamp}/${filename}`)
-        .then((response) => response.text())
-        .then((data) => {
-          const element = document.getElementById("screenshot");
-          if (element) {
-            element.remove();
-          }
-          const img = document.createElement("img");
-          img.setAttribute("id", "screenshot");
-          img.src = "data:image/jpeg;base64," + data;
-          document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-        })
-        .catch((error) => console.error("Error:", error));
-    });
-  });
+
+
 
   let startDateTime = "";
   let endDateTime = "";
@@ -160,9 +150,26 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(data => {
         console.log('JSON Data:', data);
-        constructTreeData(data);
+        const treeData = constructTreeData(data);
         $("#tree").bstreeview({
           data: treeData,
+        });
+        $(".cam_item").on("click", function (event) {
+          event.stopPropagation();
+          [timeStamp, filename] = event.target.id.split(" ");
+          fetch(`/files/${timeStamp}/${filename}`)
+            .then((response) => response.text())
+            .then((data) => {
+              const element = document.getElementById("screenshot");
+              if (element) {
+                element.remove();
+              }
+              const img = document.createElement("img");
+              img.setAttribute("id", "screenshot");
+              img.src = "data:image/jpeg;base64," + data;
+              document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+            })
+            .catch((error) => console.error("Error:", error));
         });
       })
       .catch(error => {
