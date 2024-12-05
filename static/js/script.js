@@ -156,23 +156,24 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#tree").bstreeview({
           data: treeData,
         });
-        // $(".cam_item").on("click", function (event) {
-        //   event.stopPropagation();
-        //   [timeStamp, filename] = event.target.id.split(" ");
-        //   fetch(`/files/${timeStamp}/${filename}`)
-        //     .then((response) => response.text())
-        //     .then((data) => {
-        //       const element = document.getElementById("screenshot");
-        //       if (element) {
-        //         element.remove();
-        //       }
-        //       const img = document.createElement("img");
-        //       img.setAttribute("id", "screenshot");
-        //       img.src = "data:image/jpeg;base64," + data;
-        //       document.getElementsByClassName("img_wrapper")[0].appendChild(img);
-        //     })
-        //     .catch((error) => console.error("Error:", error));
-        // });
+        $(".cam_item").on("click", function (event) {
+          event.stopPropagation();
+          buttonFileName = event.target.textContent;
+          console.log(buttonFileName);
+          // fetch(`/files/${timeStamp}/${filename}`)
+          //   .then((response) => response.text())
+          //   .then((data) => {
+          //     const element = document.getElementById("screenshot");
+          //     if (element) {
+          //       element.remove();
+          //     }
+          //     const img = document.createElement("img");
+          //     img.setAttribute("id", "screenshot");
+          //     img.src = "data:image/jpeg;base64," + data;
+          //     document.getElementsByClassName("img_wrapper")[0].appendChild(img);
+          //   })
+          //   .catch((error) => console.error("Error:", error));
+        });
       })
       .catch(error => {
         console.error('Error fetching data:', error); 
