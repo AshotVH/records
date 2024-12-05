@@ -111,7 +111,7 @@ function constructTreeData(arrayOfFileNames) {
   return treeData;
 }
 document.addEventListener("DOMContentLoaded", () => {
-  let cam_name = "np04_cam401";
+  let cam_name = "np02_cam1";
   $(".btn-check").on("change", function (event) {
     cam_name = event.target.id;
   });
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      fetch(`/np04_get_files_list/${cam_name}/${startDate}/${endDate}`)
+      fetch(`/np02_get_files_list/${cam_name}/${startDate}/${endDate}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
               fileNamelocalToUTC(event.target.textContent) +
               ".jpeg";
             
-            fetch(`/np04_get_file/${buttonFileName}`)
+            fetch(`/np02_get_file/${buttonFileName}`)
               .then((response) => response.text())
               .then((data) => {
                 const element = document.getElementById("screenshot");

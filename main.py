@@ -43,14 +43,14 @@ def index():
     else:
         return redirect(url_for('login'))
 
-@app.route('/np04_get_files_list/<cam_name>/<start_date>/<end_date>')
-def np04_get_files_list(cam_name, start_date, end_date):
-    response = requests.get(f"{API_ADDRESS}/np04_get_files_list/{cam_name}/{start_date}/{end_date}")
+@app.route('/np02_get_files_list/<cam_name>/<start_date>/<end_date>')
+def np02_get_files_list(cam_name, start_date, end_date):
+    response = requests.get(f"{API_ADDRESS}/np02_get_files_list/{cam_name}/{start_date}/{end_date}")
     return response.json()
 
-@app.route('/np04_get_file/<file_path>')
-def np04_get_file(file_path):
-    response = requests.get(f"{API_ADDRESS}/np04_get_file/{file_path}")
+@app.route('/np02_get_file/<file_path>')
+def np02_get_file(file_path):
+    response = requests.get(f"{API_ADDRESS}/np02_get_file/{file_path}")
     if response.status_code == 200:
         file_content = response.content
         encoded_content = base64.b64encode(file_content)
