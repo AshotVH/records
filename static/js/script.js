@@ -153,9 +153,14 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         console.log('JSON Data:', data);
         const treeData = constructTreeData(data);
+        $("#tree").remove();
+        $("#tree_wrapper").append('<div id="tree"></div>');
         $("#tree").bstreeview({
-          data: treeData,
+        data: treeData,
         });
+        // $("#tree").bstreeview({
+        //   data: treeData,
+        // });
         $(".list-group-item").on("click", function (event) {
           event.stopPropagation();
           buttonFileName = event.target.textContent;
