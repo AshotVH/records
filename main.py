@@ -10,6 +10,7 @@ app = Flask(__name__)
 logger = logging.getLogger(__name__)
 PASSWORD = os.environ.get("PASSWORD")
 app.secret_key = os.environ.get("SECRET_KEY", "secret")
+
 IMG_API_ADDRESS = os.environ.get("IMG_API_ADDRESS")
 VIDEO_API_ADDRESS = os.environ.get("VIDEOS_API_ADDRESS")
 

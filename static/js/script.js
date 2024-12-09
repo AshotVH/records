@@ -180,7 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 document
                   .getElementsByClassName("img_wrapper")[0]
                   .appendChild(img);
-                $(".tree_cam_name").text = cam_name;
+                console.log(cam_name);
+                $(".tree_cam_name").html(cam_name);
 
               })
               .catch((error) => console.error("Error:", error));
