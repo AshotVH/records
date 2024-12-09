@@ -45,6 +45,12 @@ def index():
         return render_template('index.html')
     else:
         return redirect(url_for('login'))
+@app.route('/videos')
+def videos():
+    if is_logged_in():
+        return render_template('videos.html')
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/np02_get_files_list/<cam_name>/<start_date>/<end_date>')
 def np02_get_files_list(cam_name, start_date, end_date):
