@@ -181,7 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
                   .getElementsByClassName("img_wrapper")[0]
                   .appendChild(img);
                 console.log(cam_name);
-                $(".tree_cam_name").html(cam_name);
+                const tree_cam_name = cam_name.split("_")[1].replace("cam","Camera ")
+                $(".tree_cam_name").html(tree_cam_name);
 
               })
               .catch((error) => console.error("Error:", error));
