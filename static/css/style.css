@@ -4,7 +4,12 @@ html {
 body {
   background-color: #004c93;
 }
-.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
   max-width: 90vw;
 }
 .page_header {
@@ -36,6 +41,10 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid white;
 }
-.timerange_submit{
+.timerange_submit {
   min-width: 145px;
+}
+.tree_cam_name {
+  text-align: center;
+  color: white;
 }
