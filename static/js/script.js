@@ -114,6 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let cam_name = "np02_cam1";
   $(".btn-check").on("change", function (event) {
     cam_name = event.target.id;
+    console.log(cam_name);
+    const tree_cam_name = cam_name.split("_")[1].replace("cam","Camera ")
+    $(".tree_cam_name").html(tree_cam_name);
   });
   let startDateTime = "";
   let endDateTime = "";
@@ -180,9 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document
                   .getElementsByClassName("img_wrapper")[0]
                   .appendChild(img);
-                console.log(cam_name);
-                const tree_cam_name = cam_name.split("_")[1].replace("cam","Camera ")
-                $(".tree_cam_name").html(tree_cam_name);
+              
 
               })
               .catch((error) => console.error("Error:", error));
